@@ -43,7 +43,7 @@ svn export --force https://github.com/openwrt/packages/branches/master/utils/nan
 rm -rf feeds/packages/lang/node
 svn export --force https://github.com/coolsnowwolf/packages/branches/master/lang/node feeds/packages/lang/node
 
-#修改ddns-scripts ddns-scripts_aliyun ddns-scripts_dnspod版本
+#修改ddns-scripts版本，貌似2.8.2显示不出服务提供商，2.7.8才正常。
 #rm -rf feeds/packages/net/{ddns-scripts,ddns-scripts_aliyun,ddns-scripts_dnspod}
 rm -rf feeds/packages/net/ddns-scripts
 svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts feeds/packages/net/ddns-scripts
@@ -77,6 +77,8 @@ rm -rf ./tmp
 #下载自己的默认配置
 rm -rf .config
 #curl -sfL https://raw.githubusercontent.com/tangyl2000/zn-m2/main/config -o .config
+
+#修改.config, 启用mosdns包，禁用相隔一行的某个mosdns。删除luci-app-mosdns编译配置文件中的mosdns依赖，否则报错。
 
 #make defconfig
 #make defconfig
