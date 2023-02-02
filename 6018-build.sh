@@ -85,6 +85,10 @@ rm -rf ./tmp
 #再次更新feeds和自行添加的包
 ./scripts/feeds update -a && ./scripts/feeds install -a
 
+#更新luci清单-手动添加的包
+./scripts/feeds update -i luci
+./scripts/feeds install -a -p luci
+
 #下载自己的默认配置
 rm -rf .config
 #curl -sfL https://raw.githubusercontent.com/tangyl2000/zn-m2/main/config -o .config
