@@ -43,12 +43,19 @@ svn export --force https://github.com/openwrt/packages/branches/master/utils/nan
 rm -rf feeds/packages/lang/node
 svn export --force https://github.com/coolsnowwolf/packages/branches/master/lang/node feeds/packages/lang/node
 
+#修改golang版本---mosdns-v5需要新版golang
+rm -rf feeds/packages/lang/golang
+svn export --force https://github.com/openwrt/packages/branches/master/lang/golang feeds/packages/lang/golang
+
 #修改ddns-scripts版本，貌似2.8.2显示不出服务提供商，2.7.8才正常。需要尝试kenzok8/openwrt-packages的luci-app-aliddns
 #rm -rf feeds/packages/net/{ddns-scripts,ddns-scripts_aliyun,ddns-scripts_dnspod}
-rm -rf feeds/packages/net/ddns-scripts
-svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts feeds/packages/net/ddns-scripts
+#rm -rf feeds/packages/net/ddns-scripts
+#svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts feeds/packages/net/ddns-scripts
 #svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts_aliyun feeds/packages/net/ddns-scripts_aliyun
 #svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts_dnspod feeds/packages/net/ddns-scripts_dnspod
+
+#获取luci-app-aliddns
+svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-aliddns feeds/luci/applications/luci-app-aliddns
 
 #修改mosdns版本、获取luci-app-mosdns
 rm -rf feeds/packages/net/mosdns
