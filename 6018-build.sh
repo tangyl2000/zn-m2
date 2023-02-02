@@ -31,6 +31,10 @@ svn export --force https://github.com/openwrt/openwrt/branches/master/package/sy
 rm -rf package/system/ubox
 svn export --force https://github.com/openwrt/openwrt/branches/master/package/system/ubox package/system/ubox
 
+#修改openwrt-keyring版本
+rm -rf package/system/openwrt-keyring
+svn export --force https://github.com/openwrt/openwrt/branches/master/package/system/openwrt-keyring package/system/openwrt-keyring
+
 #修改curl版本
 rm -rf feeds/packages/net/curl
 svn export --force https://github.com/openwrt/packages/branches/master/net/curl feeds/packages/net/curl
