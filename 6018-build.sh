@@ -4,13 +4,6 @@
 #git clone -b main --single-branch https://github.com/sdf8057/ipq6000.git
 #cd ipq6000
 
-#更新packages/luci/routing/telephony
-#./scripts/feeds update -a && ./scripts/feeds install -a
-
-#修改默认主题为agronv3
-sed -i 's/luci-theme-bootstrap/luci-theme-argonv3/g' feeds/luci/collections/luci/Makefile
-sed -i 's/Bootstrap/Argonv3/g' feeds/luci/collections/luci/Makefile
-
 #修改ethtool版本
 rm -rf package/network/utils/ethtool
 svn export --force https://github.com/openwrt/openwrt/branches/master/package/network/utils/ethtool package/network/utils/ethtool
@@ -31,9 +24,47 @@ svn export --force https://github.com/openwrt/openwrt/branches/master/package/sy
 rm -rf package/system/ubox
 svn export --force https://github.com/openwrt/openwrt/branches/master/package/system/ubox package/system/ubox
 
-#修改openwrt-keyring版本
-rm -rf package/system/openwrt-keyring
-svn export --force https://github.com/openwrt/openwrt/branches/master/package/system/openwrt-keyring package/system/openwrt-keyring
+#更新ssdk版本，包括qca-ssdk和qca-ssdk-shell
+rm -rf package/qca/nss/qca-ssdk-shell
+rm -rf package/qca/nss/qca-ssdk
+svn export --force https://github.com/hxlls/ipq6000/branches/main/package/qca/nss/qca-ssdk-shell package/qca/nss/qca-ssdk-shell
+svn export --force https://github.com/hxlls/ipq6000/branches/main/package/qca/nss/qca-ssdk package/qca/nss/qca-ssdk
+
+
+#更新packages/luci/routing/telephony
+./scripts/feeds update -a && ./scripts/feeds install -a
+
+#修改默认主题为agronv3
+sed -i 's/luci-theme-bootstrap/luci-theme-argonv3/g' feeds/luci/collections/luci/Makefile
+sed -i 's/Bootstrap/Argonv3/g' feeds/luci/collections/luci/Makefile
+
+#更新passwall所有依赖包
+rm -rf feeds/packages/net/brook
+rm -rf feeds/packages/net/chinadns-ng
+rm -rf feeds/packages/net/dns2socks
+rm -rf feeds/packages/net/dns2tcp
+rm -rf feeds/packages/net/hysteria
+rm -rf feeds/packages/net/ipt2socks
+rm -rf feeds/packages/net/pdnsd-alt
+rm -rf feeds/packages/net/shadowsocksr-libev
+rm -rf feeds/packages/net/shadowsocks-rust
+rm -rf feeds/packages/net/simple-obfs
+rm -rf feeds/packages/net/ssocks
+rm -rf feeds/packages/net/trojan
+rm -rf feeds/packages/net/trojan-go
+rm -rf feeds/packages/net/trojan-plus
+rm -rf feeds/packages/net/v2raya
+rm -rf feeds/packages/net/v2ray-core
+rm -rf feeds/packages/net/v2ray-geodata
+rm -rf feeds/packages/net/v2ray-plugin
+rm -rf feeds/packages/net/xray-core
+rm -rf feeds/packages/net/xray-plugin
+git clone https://github.com/kenzok8/small
+mv small/* feeds/packages/net/
+rm -rf feeds/packages/net/README.md
+rm -rf small
+rm -rf feeds/luci/applications/luci-app-passwall
+svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-passwall feeds/luci/applications/luci-app-passwall
 
 #修改curl版本
 rm -rf feeds/packages/net/curl
@@ -59,6 +90,7 @@ svn export --force https://github.com/openwrt/packages/branches/master/lang/gola
 #svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts_dnspod feeds/packages/net/ddns-scripts_dnspod
 
 #获取luci-app-aliddns
+rm -rf feeds/luci/applications/luci-app-aliddns
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-aliddns feeds/luci/applications/luci-app-aliddns
 
 #修改mosdns版本、获取luci-app-mosdns
@@ -80,12 +112,13 @@ svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/l
 svn export --force https://github.com/kuoruan/openwrt-upx/branches/master/upx package/utils/upx
 svn export --force https://github.com/kuoruan/openwrt-upx/branches/master/ucl package/utils/ucl
 
+#20230211:v2ray-core/files/v2ray.init貌似权限有问题，目前方法是从5.2.1整个文件夹复制过来，然后修改.init文件中的[ "$enabled" -eq "1" ] || return 1为新版[ "$enabled" -eq "0" ] && exit 1
+
 rm -rf ./tmp
 
-#再次更新feeds和自行添加的包
-./scripts/feeds update -a && ./scripts/feeds install -a
-
-#更新luci清单-手动添加的包
+#更新luci和packages
+./scripts/feeds update -i packages
+./scripts/feeds install -a -p packages
 ./scripts/feeds update -i luci
 ./scripts/feeds install -a -p luci
 
