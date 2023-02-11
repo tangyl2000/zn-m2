@@ -1,0 +1,50 @@
+#!/bin/bash
+
+#拉取git clone源码
+#git clone -b openwrt-21.02 --single-branch https://github.com/hanwckf/immortalwrt-mt798x
+#cd immortalwrt-mt798x
+
+#更新安装feeds
+#./scripts/feeds update -a && ./scripts/feeds install -a
+
+#修改默认主题为agron
+sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
+sed -i 's/Bootstrap/Argon/g' feeds/luci/collections/luci/Makefile
+
+#修改ethtool版本
+rm -rf package/network/utils/ethtool
+svn export --force https://github.com/openwrt/openwrt/branches/master/package/network/utils/ethtool package/network/utils/ethtool
+
+#修改6in4版本
+rm -rf package/network/ipv6/6in4
+svn export --force https://github.com/openwrt/openwrt/branches/master/package/network/ipv6/6in4 package/network/ipv6/6in4
+
+#修改golang版本---mosdns-v5需要新版golang
+rm -rf feeds/packages/lang/golang
+svn export --force https://github.com/openwrt/packages/branches/master/lang/golang feeds/packages/lang/golang
+
+#获取luci-app-aliddns
+svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-aliddns feeds/luci/applications/luci-app-aliddns
+
+#修改mosdns版本、获取luci-app-mosdns
+rm -rf feeds/packages/net/mosdns
+rm -rf feeds/luci/applications/luci-app-mosdns
+svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/mosdns feeds/packages/net/mosdns
+svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-mosdns feeds/luci/applications/luci-app-mosdns
+
+#获取luci-app-pushbot
+svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-pushbot feeds/luci/applications/luci-app-pushbot
+
+#获取mosdns报错的upx
+svn export --force https://github.com/kuoruan/openwrt-upx/branches/master/upx package/utils/upx
+svn export --force https://github.com/kuoruan/openwrt-upx/branches/master/ucl package/utils/ucl
+
+rm -rf ./tmp
+
+#更新luci清单-手动添加的包
+./scripts/feeds update -i luci
+./scripts/feeds install -a -p luci
+
+rm -rf .config
+
+#make menuconfig
