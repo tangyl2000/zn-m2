@@ -30,6 +30,9 @@ rm -rf package/qca/nss/qca-ssdk
 svn export --force https://github.com/hxlls/ipq6000/branches/main/package/qca/nss/qca-ssdk-shell package/qca/nss/qca-ssdk-shell
 svn export --force https://github.com/hxlls/ipq6000/branches/main/package/qca/nss/qca-ssdk package/qca/nss/qca-ssdk
 
+#更新ipv6-helper版本
+rm -rf package/addition/ipv6-helper
+svn export --force https://github.com/hxlls/ipq6000/branches/main/package/addition/ipv6-helper package/addition/ipv6-helper
 
 #更新packages/luci/routing/telephony
 ./scripts/feeds update -a && ./scripts/feeds install -a
