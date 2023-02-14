@@ -19,6 +19,10 @@ svn export --force https://github.com/openwrt/openwrt/branches/master/package/ne
 rm -rf package/network/ipv6/6in4
 svn export --force https://github.com/openwrt/openwrt/branches/master/package/network/ipv6/6in4 package/network/ipv6/6in4
 
+#修改openssl版本
+rm -rf package/libs/openssl
+svn export --force https://github.com/immortalwrt/immortalwrt/branches/openwrt-21.02/package/libs/openssl package/libs/openssl
+
 #修改golang版本---mosdns-v5需要新版golang
 rm -rf feeds/packages/lang/golang
 svn export --force https://github.com/openwrt/packages/branches/master/lang/golang feeds/packages/lang/golang
