@@ -51,4 +51,7 @@ rm -rf ./tmp
 
 rm -rf .config
 
+#.config
+#curl -sfL https://raw.githubusercontent.com/tangyl2000/zn-m2/main/360t7-config-pw -o .config
+
 #make menuconfig
