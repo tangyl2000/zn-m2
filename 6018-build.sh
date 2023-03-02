@@ -12,9 +12,9 @@ svn export --force https://github.com/openwrt/openwrt/branches/master/package/ne
 rm -rf package/network/ipv6/6in4
 svn export --force https://github.com/openwrt/openwrt/branches/master/package/network/ipv6/6in4 package/network/ipv6/6in4
 
-#修改openssl版本
+#修改openssl版本---官方已改3.0.8，但报错，此处暂用1.1.1t---20230301
 rm -rf package/libs/openssl
-svn export --force https://github.com/openwrt/openwrt/branches/master/package/libs/openssl package/libs/openssl
+svn export --force https://github.com/coolsnowwolf/lede/branches/master/package/libs/openssl
 
 #修改urandom-seed版本
 rm -rf package/system/urandom-seed
@@ -109,13 +109,22 @@ svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/a
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-adguardhome feeds/luci/applications/luci-app-adguardhome
 
 #获取luci-app-pushbot
+rm -rf feeds/luci/applications/luci-app-pushbot
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-pushbot feeds/luci/applications/luci-app-pushbot
 
 #获取mosdns报错的upx
 svn export --force https://github.com/kuoruan/openwrt-upx/branches/master/upx package/utils/upx
 svn export --force https://github.com/kuoruan/openwrt-upx/branches/master/ucl package/utils/ucl
 
-#20230211:v2ray-core/files/v2ray.init貌似权限有问题，目前方法是从5.2.1整个文件夹复制过来，然后修改.init文件中的[ "$enabled" -eq "1" ] || return 1为新版[ "$enabled" -eq "0" ] && exit 1
+#获取ucode,zerotier-1.10.2的依赖包，报错了~~~20230301
+rm -rf package/utils/ucode
+svn export --force https://github.com/immortalwrt/immortalwrt/branches/master/package/utils/ucode package/utils/ucode
+
+#获取zerotier
+rm -rf feeds/packages/net/zerotier
+svn export --force https://github.com/immortalwrt/packages/branches/master/net/zerotier feeds/packages/net/zerotier
+rm -rf feeds/luci/applications/luci-app-zerotier
+svn export --force https://github.com/immortalwrt/luci/branches/master/applications/luci-app-zerotier feeds/luci/applications/luci-app-zerotier
 
 rm -rf ./tmp
 
@@ -129,7 +138,7 @@ rm -rf ./tmp
 rm -rf .config
 #curl -sfL https://raw.githubusercontent.com/tangyl2000/zn-m2/main/zn-m2-config-pw -o .config
 
-#修改.config, 启用mosdns包，禁用相隔一行的某个mosdns。删除luci-app-mosdns编译配置文件中的mosdns依赖，否则报错。
+#修改.config, 启用mosdns-v5包，禁用相隔一行的mosdns-v4。删除luci-app-mosdns编译配置文件中的mosdns依赖，否则报错。
 
 #make defconfig
 #make defconfig
