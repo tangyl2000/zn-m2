@@ -25,10 +25,10 @@ rm -rf package/system/ubox
 svn export --force https://github.com/openwrt/openwrt/branches/master/package/system/ubox package/system/ubox
 
 #更新ssdk版本，包括qca-ssdk和qca-ssdk-shell
-rm -rf package/qca/nss/qca-ssdk-shell
-rm -rf package/qca/nss/qca-ssdk
-svn export --force https://github.com/hxlls/ipq6000/branches/main/package/qca/nss/qca-ssdk-shell package/qca/nss/qca-ssdk-shell
-svn export --force https://github.com/hxlls/ipq6000/branches/main/package/qca/nss/qca-ssdk package/qca/nss/qca-ssdk
+rm -rf package/qca/qca-ssdk-shell
+rm -rf package/qca/qca-ssdk
+svn export --force https://github.com/hxlls/ipq6000/branches/main/package/qca/nss/qca-ssdk-shell package/qca/qca-ssdk-shell
+svn export --force https://github.com/hxlls/ipq6000/branches/main/package/qca/nss/qca-ssdk package/qca/qca-ssdk
 
 #更新ipv6-helper版本
 rm -rf package/addition/ipv6-helper
