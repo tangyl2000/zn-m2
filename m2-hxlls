@@ -29,14 +29,6 @@ svn export --force https://github.com/openwrt/openwrt/branches/master/package/sy
 rm -rf package/system/ubus
 svn export --force https://github.com/sdf8057/ipq6000/branches/main/package/system/ubus package/system/ubus
 
-#更新ipv6-helper版本
-rm -rf package/addition/ipv6-helper
-svn export --force https://github.com/hxlls/ipq6000/branches/main/package/addition/ipv6-helper package/addition/ipv6-helper
-
-#更新openssl版本
-rm -rf package/libs/openssl
-svn export --force https://github.com/hxlls/ipq6000/branches/main/package/libs/openssl package/libs/openssl
-
 #更新packages/luci/routing/telephony
 ./scripts/feeds update -a && ./scripts/feeds install -a
 
