@@ -1,0 +1,135 @@
+#!/bin/bash
+
+#拉取git clone源码
+git clone -b main --single-branch https://github.com/hxlls/ipq6000.git
+
+#二次编译
+git fetch && git reset --hard origin/main
+
+#进入编译路径
+cd ipq6000
+
+#修改ethtool版本
+rm -rf package/network/utils/ethtool
+svn export --force https://github.com/openwrt/openwrt/branches/master/package/network/utils/ethtool package/network/utils/ethtool
+
+#修改6in4版本
+rm -rf package/network/ipv6/6in4
+svn export --force https://github.com/openwrt/openwrt/branches/master/package/network/ipv6/6in4 package/network/ipv6/6in4
+
+#修改urandom-seed版本
+rm -rf package/system/urandom-seed
+svn export --force https://github.com/openwrt/openwrt/branches/master/package/system/urandom-seed package/system/urandom-seed
+
+#修改ubox版本
+rm -rf package/system/ubox
+svn export --force https://github.com/openwrt/openwrt/branches/master/package/system/ubox package/system/ubox
+
+#修改ubus版本
+rm -rf package/system/ubus
+svn export --force https://github.com/sdf8057/ipq6000/branches/main/package/system/ubus package/system/ubus
+
+#更新ipv6-helper版本
+rm -rf package/addition/ipv6-helper
+svn export --force https://github.com/hxlls/ipq6000/branches/main/package/addition/ipv6-helper package/addition/ipv6-helper
+
+#更新openssl版本
+rm -rf package/libs/openssl
+svn export --force https://github.com/hxlls/ipq6000/branches/main/package/libs/openssl package/libs/openssl
+
+#更新packages/luci/routing/telephony
+./scripts/feeds update -a && ./scripts/feeds install -a
+
+#修改默认主题为agronv3
+sed -i 's/luci-theme-bootstrap/luci-theme-argonv3/g' feeds/luci/collections/luci/Makefile
+sed -i 's/Bootstrap/Argonv3/g' feeds/luci/collections/luci/Makefile
+
+#更新passwall所有依赖包和luci
+rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,pdnsd-alt,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,v2ray-core,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin}
+git clone https://github.com/xiaorouji/openwrt-passwall
+mv openwrt-passwall/* feeds/packages/net/
+rm -rf feeds/packages/net/.github
+rm -rf openwrt-passwall
+rm -rf feeds/luci/applications/luci-app-passwall
+svn export --force https://github.com/NueXini/NueXini_Packages/branches/main/luci-app-passwall feeds/luci/applications/luci-app-passwall
+
+#修改curl版本
+rm -rf feeds/packages/net/curl
+svn export --force https://github.com/openwrt/packages/branches/master/net/curl feeds/packages/net/curl
+
+#修改nano版本：
+rm -rf feeds/packages/utils/nano
+svn export --force https://github.com/openwrt/packages/branches/master/utils/nano feeds/packages/utils/nano
+
+#修改node版本：
+rm -rf feeds/packages/lang/node
+svn export --force https://github.com/coolsnowwolf/packages/branches/master/lang/node feeds/packages/lang/node
+
+#修改golang版本---mosdns-v5需要新版golang
+rm -rf feeds/packages/lang/golang
+svn export --force https://github.com/openwrt/packages/branches/master/lang/golang feeds/packages/lang/golang
+
+#修改htop版本
+rm -rf feeds/packages/admin/htop
+https://github.com/immortalwrt/packages/branches/master/admin/htop feeds/packages/admin/htop
+
+#修改ddns-scripts版本，貌似2.8.2显示不出服务提供商，2.7.8才正常。需要尝试kenzok8/openwrt-packages的luci-app-aliddns
+#rm -rf feeds/packages/net/{ddns-scripts,ddns-scripts_aliyun,ddns-scripts_dnspod}
+#rm -rf feeds/packages/net/ddns-scripts
+#svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts feeds/packages/net/ddns-scripts
+#svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts_aliyun feeds/packages/net/ddns-scripts_aliyun
+#svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts_dnspod feeds/packages/net/ddns-scripts_dnspod
+
+#获取luci-app-aliddns
+rm -rf feeds/luci/applications/luci-app-aliddns
+svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-aliddns feeds/luci/applications/luci-app-aliddns
+
+#修改mosdns版本、获取luci-app-mosdns
+rm -rf feeds/packages/net/mosdns
+rm -rf feeds/luci/applications/luci-app-mosdns
+svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/mosdns feeds/packages/net/mosdns
+svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-mosdns feeds/luci/applications/luci-app-mosdns
+
+#获取v2dat,luci-app-mosdns依赖于此
+rm -rf feeds/packages/utils/v2dat
+svn export --force https://github.com/coolsnowwolf/packages/branches/master/utils/v2dat feeds/packages/utils/v2dat
+
+#获取luci-app-adguardhome、adguardhome
+rm -rf feeds/packages/net/adguardhome
+svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/adguardhome feeds/packages/net/adguardhome
+rm -rf feeds/luci/applications/luci-app-adguardhome
+svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-adguardhome feeds/luci/applications/luci-app-adguardhome
+
+#获取luci-app-pushbot
+rm -rf feeds/luci/applications/luci-app-pushbot
+svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-pushbot feeds/luci/applications/luci-app-pushbot
+
+#获取zerotier
+rm -rf feeds/packages/net/zerotier
+svn export --force https://github.com/coolsnowwolf/packages/branches/master/net/zerotier feeds/packages/net/zerotier
+rm -rf feeds/luci/applications/luci-app-zerotier
+svn export --force https://github.com/coolsnowwolf/luci/branches/master/applications/luci-app-zerotier feeds/luci/applications/luci-app-zerotier
+
+#获取msd_lite和luci-app-msd_lite
+rm -rf feeds/packages/net/msd_lite
+git clone https://github.com/ximiTech/msd_lite.git feeds/packages/net/msd_lite
+rm -rf feeds/luci/applications/luci-app-msd_lite
+git clone https://github.com/ximiTech/luci-app-msd_lite.git feeds/luci/applications/luci-app-msd_lite
+
+rm -rf ./tmp
+
+#更新luci和packages
+./scripts/feeds update -i packages
+./scripts/feeds install -a -p packages
+./scripts/feeds update -i luci
+./scripts/feeds install -a -p luci
+
+#下载自己的默认配置
+rm -rf .config
+#curl -sfL https://raw.githubusercontent.com/tangyl2000/zn-m2/main/zn-m2-config-pw -o .config
+
+make defconfig
+
+make download -j8
+
+make -j8 V=s
