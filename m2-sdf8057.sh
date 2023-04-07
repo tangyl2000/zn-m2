@@ -53,7 +53,7 @@ mv openwrt-passwall/* feeds/packages/net/
 rm -rf openwrt-passwall
 #更新geodata数据
 rm -rf feeds/packages/net/v2ray-geodata
-svn export --force https://github.com/kenzok8/small/tree/master/v2ray-geodata feeds/packages/net/v2ray-geodata
+svn export --force https://github.com/kenzok8/small/branches/master/v2ray-geodata feeds/packages/net/v2ray-geodata
 #更新luci-app-passwall
 rm -rf feeds/luci/applications/luci-app-passwall
 svn export --force https://github.com/NueXini/NueXini_Packages/branches/main/luci-app-passwall feeds/luci/applications/luci-app-passwall
