@@ -1,8 +1,13 @@
 #!/bin/bash
 
 #拉取git clone源码
-#git clone -b main --single-branch https://github.com/sdf8057/ipq6000.git
-#cd ipq6000
+git clone -b main --single-branch https://github.com/sdf8057/ipq6000.git
+
+#二次编译
+git fetch && git reset --hard origin/main
+
+#进入编译路径
+cd ipq6000
 
 #修改ethtool版本
 rm -rf package/network/utils/ethtool
@@ -41,7 +46,7 @@ svn export --force https://github.com/hxlls/ipq6000/branches/main/package/libs/o
 sed -i 's/luci-theme-bootstrap/luci-theme-argonv3/g' feeds/luci/collections/luci/Makefile
 sed -i 's/Bootstrap/Argonv3/g' feeds/luci/collections/luci/Makefile
 
-#更新passwall所有依赖包
+#更新passwall所有依赖包和luci
 rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,pdnsd-alt,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,v2ray-core,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin}
 git clone https://github.com/xiaorouji/openwrt-passwall
 mv openwrt-passwall/* feeds/packages/net/
@@ -66,6 +71,10 @@ svn export --force https://github.com/coolsnowwolf/packages/branches/master/lang
 rm -rf feeds/packages/lang/golang
 svn export --force https://github.com/openwrt/packages/branches/master/lang/golang feeds/packages/lang/golang
 
+#修改htop版本
+rm -rf feeds/packages/admin/htop
+https://github.com/immortalwrt/packages/branches/master/admin/htop feeds/packages/admin/htop
+
 #修改ddns-scripts版本，貌似2.8.2显示不出服务提供商，2.7.8才正常。需要尝试kenzok8/openwrt-packages的luci-app-aliddns
 #rm -rf feeds/packages/net/{ddns-scripts,ddns-scripts_aliyun,ddns-scripts_dnspod}
 #rm -rf feeds/packages/net/ddns-scripts
@@ -83,10 +92,14 @@ rm -rf feeds/luci/applications/luci-app-mosdns
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/mosdns feeds/packages/net/mosdns
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-mosdns feeds/luci/applications/luci-app-mosdns
 
+#获取v2dat,luci-app-mosdns依赖于此
+rm -rf feeds/packages/utils/v2dat
+svn export --force https://github.com/coolsnowwolf/packages/branches/master/utils/v2dat feeds/packages/utils/v2dat
+
 #获取luci-app-adguardhome、adguardhome
 rm -rf feeds/packages/net/adguardhome
-rm -rf feeds/luci/applications/luci-app-adguardhome
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/adguardhome feeds/packages/net/adguardhome
+rm -rf feeds/luci/applications/luci-app-adguardhome
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-adguardhome feeds/luci/applications/luci-app-adguardhome
 
 #获取luci-app-pushbot
@@ -111,11 +124,8 @@ rm -rf ./tmp
 rm -rf .config
 #curl -sfL https://raw.githubusercontent.com/tangyl2000/zn-m2/main/zn-m2-config-pw -o .config
 
-#修改.config, 启用mosdns-v5包，禁用相隔一行的mosdns-v4。删除luci-app-mosdns编译配置文件中的mosdns依赖，否则报错。
-
 make defconfig
 
 make download -j8
 
-#make
-make -j6 V=s
+make -j8 V=s
