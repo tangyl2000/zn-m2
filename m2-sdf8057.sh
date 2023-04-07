@@ -50,8 +50,11 @@ sed -i 's/Bootstrap/Argonv3/g' feeds/luci/collections/luci/Makefile
 rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,pdnsd-alt,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,v2ray-core,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin}
 git clone https://github.com/xiaorouji/openwrt-passwall
 mv openwrt-passwall/* feeds/packages/net/
-rm -rf feeds/packages/net/.github
 rm -rf openwrt-passwall
+#更新geodata数据
+rm -rf feeds/packages/net/v2ray-geodata
+svn export --force https://github.com/kenzok8/small/tree/master/v2ray-geodata feeds/packages/net/v2ray-geodata
+#更新luci-app-passwall
 rm -rf feeds/luci/applications/luci-app-passwall
 svn export --force https://github.com/NueXini/NueXini_Packages/branches/main/luci-app-passwall feeds/luci/applications/luci-app-passwall
 
