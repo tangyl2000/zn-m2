@@ -42,32 +42,13 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argonv3/g' feeds/luci/collections/luci
 sed -i 's/Bootstrap/Argonv3/g' feeds/luci/collections/luci/Makefile
 
 #更新passwall所有依赖包
-rm -rf feeds/packages/net/brook
-rm -rf feeds/packages/net/chinadns-ng
-rm -rf feeds/packages/net/dns2socks
-rm -rf feeds/packages/net/dns2tcp
-rm -rf feeds/packages/net/hysteria
-rm -rf feeds/packages/net/ipt2socks
-rm -rf feeds/packages/net/pdnsd-alt
-rm -rf feeds/packages/net/shadowsocksr-libev
-rm -rf feeds/packages/net/shadowsocks-rust
-rm -rf feeds/packages/net/simple-obfs
-rm -rf feeds/packages/net/ssocks
-rm -rf feeds/packages/net/trojan
-rm -rf feeds/packages/net/trojan-go
-rm -rf feeds/packages/net/trojan-plus
-rm -rf feeds/packages/net/v2raya
-rm -rf feeds/packages/net/v2ray-core
-rm -rf feeds/packages/net/v2ray-geodata
-rm -rf feeds/packages/net/v2ray-plugin
-rm -rf feeds/packages/net/xray-core
-rm -rf feeds/packages/net/xray-plugin
-git clone https://github.com/kenzok8/small
-mv small/* feeds/packages/net/
-rm -rf feeds/packages/net/README.md
-rm -rf small
+rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,pdnsd-alt,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,v2ray-core,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin}
+git clone https://github.com/xiaorouji/openwrt-passwall
+mv openwrt-passwall/* feeds/packages/net/
+rm -rf feeds/packages/net/.github
+rm -rf openwrt-passwall
 rm -rf feeds/luci/applications/luci-app-passwall
-svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-passwall feeds/luci/applications/luci-app-passwall
+svn export --force https://github.com/NueXini/NueXini_Packages/branches/main/luci-app-passwall feeds/luci/applications/luci-app-passwall
 
 #修改curl版本
 rm -rf feeds/packages/net/curl
