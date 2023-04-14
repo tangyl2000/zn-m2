@@ -66,14 +66,27 @@ svn export --force https://github.com/openwrt/packages/branches/master/lang/gola
 
 #修改htop版本
 rm -rf feeds/packages/admin/htop
-https://github.com/immortalwrt/packages/branches/master/admin/htop feeds/packages/admin/htop
+svn export --force https://github.com/immortalwrt/packages/branches/master/admin/htop feeds/packages/admin/htop
 
-#修改ddns-scripts版本，貌似2.8.2显示不出服务提供商，2.7.8才正常。需要尝试kenzok8/openwrt-packages的luci-app-aliddns
-#rm -rf feeds/packages/net/{ddns-scripts,ddns-scripts_aliyun,ddns-scripts_dnspod}
-#rm -rf feeds/packages/net/ddns-scripts
-#svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts feeds/packages/net/ddns-scripts
-#svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts_aliyun feeds/packages/net/ddns-scripts_aliyun
-#svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts_dnspod feeds/packages/net/ddns-scripts_dnspod
+#修改ddns-scripts版本，貌似2.8.2显示不出服务提供商，2.7.8才正常。暂时不动。
+rm -rf feeds/packages/net/{ddns-scripts,ddns-scripts_aliyun,ddns-scripts_dnspod}
+svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts feeds/packages/net/ddns-scripts
+svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts_aliyun feeds/packages/net/ddns-scripts_aliyun
+svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts_dnspod feeds/packages/net/ddns-scripts_dnspod
+rm -rf feeds/luci/applications/luci-app-ddns
+svn export --force https://github.com/immortalwrt/luci/branches/master/applications/luci-app-ddns feeds/luci/applications/luci-app-ddns
+rm -rf feeds/luci/modules/luci-lua-runtime
+svn export --force https://github.com/immortalwrt/luci/branches/master/modules/luci-lua-runtime feeds/luci/modules/luci-lua-runtime
+rm -rf feeds/luci/libs/luci-lib-base
+svn export --force https://github.com/immortalwrt/luci/branches/master/libs/luci-lib-base feeds/luci/libs/luci-lib-base
+rm -rf feeds/luci/contrib/packageucode-mod-lua
+svn export --force https://github.com/immortalwrt/luci/branches/master/contrib/package/ucode-mod-lua feeds/luci/contrib/packageucode-mod-lua
+
+#更新ddns-go
+rm -rf feeds/packages/net/ddns-go
+svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-go feeds/packages/net/ddns-go
+rm -rf feeds/luci/applications/luci-app-ddns-go
+svn export --force https://github.com/immortalwrt/luci/branches/master/applications/luci-app-ddns-go feeds/luci/applications/luci-app-ddns-go
 
 #获取luci-app-aliddns
 rm -rf feeds/luci/applications/luci-app-aliddns
@@ -114,6 +127,15 @@ git clone https://github.com/ximiTech/luci-app-msd_lite.git feeds/luci/applicati
 #更新luci-app-cpufreq
 rm -rf feeds/luci/applications/luci-app-cpufreq
 svn export --force https://github.com/sdf8057/luci/branches/1806/applications/luci-app-cpufreq feeds/luci/applications/luci-app-cpufreq
+
+#更新unblockmusic
+rm -rf feeds/packages/multimedia/UnblockNeteaseMusic
+svn export --force https://github.com/coolsnowwolf/packages/branches/master/multimedia/UnblockNeteaseMusic feeds/packages/multimedia/UnblockNeteaseMusic
+rm -rf feeds/packages/multimedia/UnblockNeteaseMusic-Go
+svn export --force https://github.com/coolsnowwolf/packages/branches/master/multimedia/UnblockNeteaseMusic-Go feeds/packages/multimedia/UnblockNeteaseMusic-Go
+rm -rf feeds/luci/applications/luci-app-unblockmusic
+svn export --force https://github.com/coolsnowwolf/luci/branches/master/applications/luci-app-unblockmusic feeds/luci/applications/luci-app-unblockmusic
+#还需要upx和ucl包:https://github.com/kuoruan/openwrt-upx
 
 rm -rf ./tmp
 
