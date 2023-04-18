@@ -1,15 +1,30 @@
 #!/bin/bash
 
-#拉取git clone源码
+#拉取hanwckf源码
 #git clone -b openwrt-21.02 --single-branch https://github.com/hanwckf/immortalwrt-mt798x
 #cd immortalwrt-mt798x
 
-#更新安装feeds
-#./scripts/feeds update -a && ./scripts/feeds install -a
+#拉取237源码
+git clone -b mt7981 --single-branch https://github.com/padavanonly/immortalwrtARM
+cd immortalwrtARM
 
-#修改默认主题为agron
-sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
-sed -i 's/Bootstrap/Argon/g' feeds/luci/collections/luci/Makefile
+:'
+237源需要更改scripts/feeds文件第835行为：
+system('sed -i -e \'s/"^rausb%d", "^rai%d", "^ra%d", "^wdsi%d", "^wds%d", "^apclii%d", "^apcli%d", "^apcliusb%d", //\' feeds/luci/modules/luci-base/luasrc/model/network.lua');
+原内容：
+system(`sed -i -e 's/"^rausb%d", "^rai%d", "^ra%d", "^wdsi%d", "^wds%d", "^apclii%d", "^apcli%d", "^apcliusb%d", //' feeds/luci/modules/luci-base/luasrc/model/network.lua`);
+'
+
+#更新安装feeds
+./scripts/feeds update -a && ./scripts/feeds install -a
+
+#拉取luci-theme-design
+rm -rf feeds/luci/themes/luci-theme-design
+git clone https://github.com/gngpp/luci-theme-design feeds/luci/themes/luci-theme-design
+
+#修改默认主题为luci-theme-design
+sed -i 's/luci-theme-bootstrap/luci-theme-design/g' feeds/luci/collections/luci/Makefile
+sed -i 's/Bootstrap/Design/g' feeds/luci/collections/luci/Makefile
 
 #修改ethtool版本
 rm -rf package/network/utils/ethtool
@@ -19,13 +34,61 @@ svn export --force https://github.com/openwrt/openwrt/branches/master/package/ne
 rm -rf package/network/ipv6/6in4
 svn export --force https://github.com/openwrt/openwrt/branches/master/package/network/ipv6/6in4 package/network/ipv6/6in4
 
+#修改urandom-seed版本
+rm -rf package/system/urandom-seed
+svn export --force https://github.com/openwrt/openwrt/branches/master/package/system/urandom-seed package/system/urandom-seed
+
+#修改ubox版本
+rm -rf package/system/ubox
+svn export --force https://github.com/openwrt/openwrt/branches/master/package/system/ubox package/system/ubox
+
+#修改ubus版本
+rm -rf package/system/ubus
+svn export --force https://github.com/sdf8057/ipq6000/branches/main/package/system/ubus package/system/ubus
+
+#修改fstools版本
+rm -rf package/system/fstools
+svn export --force https://github.com/immortalwrt/immortalwrt/branches/master/package/system/fstools package/system/fstools
+
 #修改openssl版本
 rm -rf package/libs/openssl
 svn export --force https://github.com/immortalwrt/immortalwrt/branches/openwrt-21.02/package/libs/openssl package/libs/openssl
 
+#修改curl版本
+rm -rf feeds/packages/net/curl
+svn export --force https://github.com/openwrt/packages/branches/master/net/curl feeds/packages/net/curl
+
+#修改nano版本：
+rm -rf feeds/packages/utils/nano
+svn export --force https://github.com/openwrt/packages/branches/master/utils/nano feeds/packages/utils/nano
+
+#修改node版本：
+rm -rf feeds/packages/lang/node
+svn export --force https://github.com/coolsnowwolf/packages/branches/master/lang/node feeds/packages/lang/node
+
 #修改golang版本---mosdns-v5需要新版golang
 rm -rf feeds/packages/lang/golang
 svn export --force https://github.com/openwrt/packages/branches/master/lang/golang feeds/packages/lang/golang
+
+#修改htop版本
+rm -rf feeds/packages/admin/htop
+svn export --force https://github.com/immortalwrt/packages/branches/master/admin/htop feeds/packages/admin/htop
+
+#修改golang版本---mosdns-v5需要新版golang
+rm -rf feeds/packages/lang/golang
+svn export --force https://github.com/openwrt/packages/branches/master/lang/golang feeds/packages/lang/golang
+
+#更新passwall所有依赖包和luci
+rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,pdnsd-alt,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,v2ray-core,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin}
+git clone https://github.com/xiaorouji/openwrt-passwall
+mv openwrt-passwall/* feeds/packages/net/
+rm -rf openwrt-passwall
+#更新geodata数据
+rm -rf feeds/packages/net/v2ray-geodata
+svn export --force https://github.com/kenzok8/small/branches/master/v2ray-geodata feeds/packages/net/v2ray-geodata
+#更新luci-app-passwall
+rm -rf feeds/luci/applications/luci-app-passwall
+svn export --force https://github.com/NueXini/NueXini_Packages/branches/main/luci-app-passwall feeds/luci/applications/luci-app-passwall
 
 #获取luci-app-aliddns
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-aliddns feeds/luci/applications/luci-app-aliddns
@@ -39,19 +102,30 @@ svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/l
 #获取luci-app-pushbot
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-pushbot feeds/luci/applications/luci-app-pushbot
 
-#获取mosdns报错的upx
-svn export --force https://github.com/kuoruan/openwrt-upx/branches/master/upx package/utils/upx
-svn export --force https://github.com/kuoruan/openwrt-upx/branches/master/ucl package/utils/ucl
+#获取zerotier
+rm -rf feeds/packages/net/zerotier
+svn export --force https://github.com/coolsnowwolf/packages/branches/master/net/zerotier feeds/packages/net/zerotier
+rm -rf feeds/luci/applications/luci-app-zerotier
+svn export --force https://github.com/coolsnowwolf/luci/branches/master/applications/luci-app-zerotier feeds/luci/applications/luci-app-zerotier
+
+#获取msd_lite
+rm -rf feeds/packages/net/msd_lite
+rm -rf rm -rf feeds/luci/applications/luci-app-msd_lite
+svn export --force https://github.com/immortalwrt/packages/branches/master/net/msd_lite feeds/packages/net/msd_lite
+svn export --force https://github.com/immortalwrt/luci/branches/master/applications/luci-app-msd_lite feeds/luci/applications/luci-app-msd_lite
 
 rm -rf ./tmp
 
-#更新luci清单-手动添加的包
+#更新luci和packages
+./scripts/feeds update -i packages
+./scripts/feeds install -a -p packages
 ./scripts/feeds update -i luci
 ./scripts/feeds install -a -p luci
 
 rm -rf .config
 
-#.config
-#curl -sfL https://raw.githubusercontent.com/tangyl2000/zn-m2/main/360t7-config-pw -o .config
+make defconfig
 
-#make menuconfig
+make download -j8
+
+make -j8 V=s
