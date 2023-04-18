@@ -44,7 +44,12 @@ svn export --force https://github.com/openwrt/openwrt/branches/master/package/sy
 
 #修改ubus版本
 rm -rf package/system/ubus
-svn export --force https://github.com/sdf8057/ipq6000/branches/main/package/system/ubus package/system/ubus
+#svn export --force https://github.com/sdf8057/ipq6000/branches/main/package/system/ubus package/system/ubus
+svn export --force https://github.com/openwrt/openwrt/branches/master/package/system/ubus package/system/ubus
+
+#修改rpcd配置文件，修改/etc/config/rpcd内容中的option socket路径为/var/run/ubus/ubus.sock
+#rm -rf package/system/rpcd
+#svn export --force https://github.com/sdf8057/ipq6000/branches/main/package/system/rpcd package/system/rpcd
 
 #修改fstools版本
 rm -rf package/system/fstools
