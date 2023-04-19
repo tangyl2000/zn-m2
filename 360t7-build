@@ -89,7 +89,7 @@ rm -rf feeds/packages/net/v2ray-geodata
 svn export --force https://github.com/kenzok8/small/branches/master/v2ray-geodata feeds/packages/net/v2ray-geodata
 #更新luci-app-passwall
 rm -rf feeds/luci/applications/luci-app-passwall
-svn export --force hhttps://github.com/kenzok8/small-package/branches/main/luci-app-passwall feeds/luci/applications/luci-app-passwall
+svn export --force https://github.com/kenzok8/small-package/branches/main/luci-app-passwall feeds/luci/applications/luci-app-passwall
 
 #获取luci-app-aliddns
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-aliddns feeds/luci/applications/luci-app-aliddns
