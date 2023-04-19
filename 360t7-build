@@ -47,7 +47,7 @@ rm -rf package/system/ubus
 #svn export --force https://github.com/sdf8057/ipq6000/branches/main/package/system/ubus package/system/ubus
 svn export --force https://github.com/openwrt/openwrt/branches/master/package/system/ubus package/system/ubus
 
-#修改rpcd配置文件，修改/etc/config/rpcd内容中的option socket路径为/var/run/ubus/ubus.sock
+#修改rpcd配置文件[必须！！！]修改package/system/rpcd/files/rpcd.config内容中的option socket路径为/var/run/ubus/ubus.sock
 #rm -rf package/system/rpcd
 #svn export --force https://github.com/sdf8057/ipq6000/branches/main/package/system/rpcd package/system/rpcd
 
@@ -78,10 +78,6 @@ svn export --force https://github.com/openwrt/packages/branches/master/lang/gola
 #修改htop版本
 rm -rf feeds/packages/admin/htop
 svn export --force https://github.com/immortalwrt/packages/branches/master/admin/htop feeds/packages/admin/htop
-
-#修改golang版本---mosdns-v5需要新版golang
-rm -rf feeds/packages/lang/golang
-svn export --force https://github.com/openwrt/packages/branches/master/lang/golang feeds/packages/lang/golang
 
 #更新passwall所有依赖包和luci
 rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,pdnsd-alt,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,v2ray-core,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin}
@@ -128,7 +124,6 @@ rm -rf ./tmp
 ./scripts/feeds install -a -p luci
 
 rm -rf .config
-#curl -sfL https://raw.githubusercontent.com/tangyl2000/zn-m2/main/360t7-config-pw -o .config
 
 make defconfig
 
