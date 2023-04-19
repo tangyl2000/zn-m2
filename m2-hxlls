@@ -108,6 +108,10 @@ svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/a
 rm -rf feeds/luci/applications/luci-app-adguardhome
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-adguardhome feeds/luci/applications/luci-app-adguardhome
 
+#更新gn
+rm -rf feeds/packages/net/gn
+svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/gn feeds/packages/net/gn
+
 #获取luci-app-pushbot
 rm -rf feeds/luci/applications/luci-app-pushbot
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-pushbot feeds/luci/applications/luci-app-pushbot
