@@ -43,10 +43,10 @@ mv openwrt-passwall/* feeds/packages/net/
 rm -rf openwrt-passwall
 #更新geodata数据
 rm -rf feeds/packages/net/v2ray-geodata
-svn export --force https://github.com/kenzok8/small/branches/master/v2ray-geodata feeds/packages/net/v2ray-geodata
+svn export --force https://github.com/kenzok8/small-package/branches/main/v2ray-geodata feeds/packages/net/v2ray-geodata
 #更新luci-app-passwall
 rm -rf feeds/luci/applications/luci-app-passwall
-svn export --force https://github.com/NueXini/NueXini_Packages/branches/main/luci-app-passwall feeds/luci/applications/luci-app-passwall
+svn export --force https://github.com/kenzok8/small-package/branches/main/luci-app-passwall feeds/luci/applications/luci-app-passwall
 
 #修改curl版本
 rm -rf feeds/packages/net/curl
@@ -90,7 +90,7 @@ svn export --force https://github.com/immortalwrt/luci/branches/master/applicati
 
 #获取luci-app-aliddns
 rm -rf feeds/luci/applications/luci-app-aliddns
-svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-aliddns feeds/luci/applications/luci-app-aliddns
+svn export --force https://github.com/kenzok8/small-package/branches/main/luci-app-aliddns feeds/luci/applications/luci-app-aliddns
 
 #修改mosdns版本、获取luci-app-mosdns
 rm -rf feeds/packages/net/mosdns
@@ -100,7 +100,7 @@ svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/l
 
 #获取v2dat,luci-app-mosdns依赖于此
 rm -rf feeds/packages/utils/v2dat
-svn export --force https://github.com/coolsnowwolf/packages/branches/master/utils/v2dat feeds/packages/utils/v2dat
+svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/v2dat feeds/packages/utils/v2dat
 
 #获取luci-app-adguardhome、adguardhome
 rm -rf feeds/packages/net/adguardhome
@@ -134,9 +134,9 @@ svn export --force https://github.com/sdf8057/luci/branches/1806/applications/lu
 
 #更新unblockmusic
 rm -rf feeds/packages/multimedia/UnblockNeteaseMusic
-svn export --force https://github.com/coolsnowwolf/packages/branches/master/multimedia/UnblockNeteaseMusic feeds/packages/multimedia/UnblockNeteaseMusic
+svn export --force https://github.com/kenzok8/small-package/branches/main/UnblockNeteaseMusic feeds/packages/multimedia/UnblockNeteaseMusic
 rm -rf feeds/packages/multimedia/UnblockNeteaseMusic-Go
-svn export --force https://github.com/coolsnowwolf/packages/branches/master/multimedia/UnblockNeteaseMusic-Go feeds/packages/multimedia/UnblockNeteaseMusic-Go
+svn export --force https://github.com/kenzok8/small-package/branches/main/UnblockNeteaseMusic-Go feeds/packages/multimedia/UnblockNeteaseMusic-Go
 rm -rf feeds/luci/applications/luci-app-unblockmusic
 svn export --force https://github.com/coolsnowwolf/luci/branches/master/applications/luci-app-unblockmusic feeds/luci/applications/luci-app-unblockmusic
 #还需要upx和ucl包:https://github.com/kuoruan/openwrt-upx
@@ -151,7 +151,7 @@ rm -rf ./tmp
 
 #下载自己的默认配置
 rm -rf .config
-#curl -sfL https://raw.githubusercontent.com/tangyl2000/zn-m2/main/zn-m2-config-pw -o .config
+curl -sfL https://raw.githubusercontent.com/tangyl2000/zn-m2/main/zn-m2-config-pw -o .config
 
 make defconfig
 
