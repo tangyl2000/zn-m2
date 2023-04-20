@@ -139,7 +139,8 @@ rm -rf feeds/packages/multimedia/UnblockNeteaseMusic-Go
 svn export --force https://github.com/kenzok8/small-package/branches/main/UnblockNeteaseMusic-Go feeds/packages/multimedia/UnblockNeteaseMusic-Go
 rm -rf feeds/luci/applications/luci-app-unblockmusic
 svn export --force https://github.com/coolsnowwolf/luci/branches/master/applications/luci-app-unblockmusic feeds/luci/applications/luci-app-unblockmusic
-#还需要upx和ucl包:https://github.com/kuoruan/openwrt-upx
+rm -rf feeds/packages/utils/upx
+svn export --force https://github.com/immortalwrt/packages/branches/master/utils/upx feeds/packages/utils/upx
 
 rm -rf ./tmp
 
@@ -151,7 +152,7 @@ rm -rf ./tmp
 
 #下载自己的默认配置
 rm -rf .config
-curl -sfL https://raw.githubusercontent.com/tangyl2000/zn-m2/main/zn-m2-config-pw -o .config
+#curl -sfL https://raw.githubusercontent.com/tangyl2000/zn-m2/main/zn-m2-config-pw -o .config
 
 make defconfig
 
