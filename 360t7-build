@@ -116,6 +116,14 @@ rm -rf rm -rf feeds/luci/applications/luci-app-msd_lite
 svn export --force https://github.com/immortalwrt/packages/branches/master/net/msd_lite feeds/packages/net/msd_lite
 svn export --force https://github.com/immortalwrt/luci/branches/master/applications/luci-app-msd_lite feeds/luci/applications/luci-app-msd_lite
 
+#更新unblockmusic
+rm -rf feeds/packages/multimedia/UnblockNeteaseMusic
+svn export --force https://github.com/kenzok8/small-package/branches/main/UnblockNeteaseMusic feeds/packages/multimedia/UnblockNeteaseMusic
+rm -rf feeds/packages/multimedia/UnblockNeteaseMusic-Go
+svn export --force https://github.com/kenzok8/small-package/branches/main/UnblockNeteaseMusic-Go feeds/packages/multimedia/UnblockNeteaseMusic-Go
+rm -rf feeds/luci/applications/luci-app-unblockmusic
+svn export --force https://github.com/coolsnowwolf/luci/branches/master/applications/luci-app-unblockmusic feeds/luci/applications/luci-app-unblockmusic
+
 rm -rf ./tmp
 
 #更新luci和packages
