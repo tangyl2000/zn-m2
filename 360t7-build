@@ -110,6 +110,7 @@ rm -rf feeds/packages/utils/v2dat
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/v2dat feeds/packages/utils/v2dat
 
 #获取luci-app-pushbot
+rm -rf feeds/luci/applications/luci-app-pushbot
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-pushbot feeds/luci/applications/luci-app-pushbot
 
 #获取zerotier
