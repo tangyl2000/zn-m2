@@ -28,6 +28,8 @@ svn export --force https://github.com/openwrt/openwrt/branches/master/package/sy
 #修改ubus版本
 rm -rf package/system/ubus
 svn export --force https://github.com/sdf8057/ipq6000/branches/main/package/system/ubus package/system/ubus
+#如果用op官网ubus版本，必须要修改rpcd的配置文件ubus.sock文件路径为：/var/run/ubus/ubus.sock，原路径：/var/run/ubus.sock
+#svn export --force https://github.com/openwrt/openwrt/branches/master/package/system/ubus package/system/ubus
 
 #更新packages/luci/routing/telephony
 ./scripts/feeds update -a && ./scripts/feeds install -a
@@ -37,7 +39,7 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argonv3/g' feeds/luci/collections/luci
 sed -i 's/Bootstrap/Argonv3/g' feeds/luci/collections/luci/Makefile
 
 #更新passwall所有依赖包和luci
-rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,pdnsd-alt,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,v2ray-core,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin}
+rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,pdnsd-alt,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,v2ray-core,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin,tuic-client}
 git clone https://github.com/xiaorouji/openwrt-passwall
 mv openwrt-passwall/* feeds/packages/net/
 rm -rf openwrt-passwall
@@ -47,6 +49,9 @@ svn export --force https://github.com/kenzok8/small-package/branches/main/v2ray-
 #更新luci-app-passwall
 rm -rf feeds/luci/applications/luci-app-passwall
 svn export --force https://github.com/kenzok8/small-package/branches/main/luci-app-passwall feeds/luci/applications/luci-app-passwall
+#更新tuic_client数据
+rm -rf feeds/packages/net/tuic_client
+svn export --force https://github.com/kenzok8/small-package/branches/main/tuic_client feeds/packages/net/tuic_client
 
 #修改curl版本
 rm -rf feeds/packages/net/curl
@@ -108,7 +113,7 @@ svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/l
 rm -rf feeds/packages/net/gn
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/gn feeds/packages/net/gn
 
-#获取luci-app-pushbot
+#获取luci-app-pushbot---8月有变化，貌似没有了，换成luci-app-wechatpush。参考https://github.com/tty228/luci-app-wechatpush
 rm -rf feeds/luci/applications/luci-app-pushbot
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-pushbot feeds/luci/applications/luci-app-pushbot
 
@@ -120,9 +125,9 @@ svn export --force https://github.com/coolsnowwolf/luci/branches/master/applicat
 
 #获取msd_lite和luci-app-msd_lite
 rm -rf feeds/packages/net/msd_lite
-git clone https://github.com/ximiTech/msd_lite.git feeds/packages/net/msd_lite
+git clone https://github.com/ximiTech/msd_lite feeds/packages/net/msd_lite
 rm -rf feeds/luci/applications/luci-app-msd_lite
-git clone https://github.com/ximiTech/luci-app-msd_lite.git feeds/luci/applications/luci-app-msd_lite
+git clone https://github.com/ximiTech/luci-app-msd_lite feeds/luci/applications/luci-app-msd_lite
 
 #更新luci-app-cpufreq
 rm -rf feeds/luci/applications/luci-app-cpufreq
@@ -145,7 +150,7 @@ git clone https://github.com/kiddin9/luci-app-dnsfilter feeds/luci/applications/
 
 #更新agronv3主题
 rm -rf feeds/luci/themes/luci-theme-argonv3
-git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git feeds/luci/themes/luci-theme-argonv3
+git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon feeds/luci/themes/luci-theme-argonv3
 
 rm -rf ./tmp
 
