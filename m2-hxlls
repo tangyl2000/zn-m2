@@ -89,9 +89,9 @@ svn export --force https://github.com/immortalwrt/luci/branches/master/contrib/p
 
 #更新ddns-go
 rm -rf feeds/packages/net/ddns-go
-svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-go feeds/packages/net/ddns-go
+svn export --force https://github.com/sirpdboy/luci-app-ddns-go/branches/main/ddns-go feeds/packages/net/ddns-go
 rm -rf feeds/luci/applications/luci-app-ddns-go
-svn export --force https://github.com/immortalwrt/luci/branches/master/applications/luci-app-ddns-go feeds/luci/applications/luci-app-ddns-go
+svn export --force https://github.com/sirpdboy/luci-app-ddns-go/branches/main/luci-app-ddns-go feeds/luci/applications/luci-app-ddns-go
 
 #修改mosdns版本、获取luci-app-mosdns
 rm -rf feeds/packages/net/mosdns
@@ -113,15 +113,21 @@ svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/l
 rm -rf feeds/packages/net/gn
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/gn feeds/packages/net/gn
 
-#获取luci-app-pushbot---8月有变化，貌似没有了，换成luci-app-wechatpush。参考https://github.com/tty228/luci-app-wechatpush
+#获取luci-app-pushbot---*******已不建议使用
 rm -rf feeds/luci/applications/luci-app-pushbot
 svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-pushbot feeds/luci/applications/luci-app-pushbot
 
+#8月有变化，luci-app-pushbot已不建议使用，换成了luci-app-wechatpush。参考https://github.com/tty228/luci-app-wechatpush
+rm -rf feeds/luci/applications/luci-app-wechatpush
+git clone -b openwrt-18.06 https://github.com/tty228/luci-app-wechatpush feeds/luci/applications/luci-app-wechatpush
+
 #获取zerotier
 rm -rf feeds/packages/net/zerotier
-svn export --force https://github.com/coolsnowwolf/packages/branches/master/net/zerotier feeds/packages/net/zerotier
+git clone https://github.com/mwarning/zerotier-openwrt
+mv zerotier-openwrt/zerotier/ feeds/packages/net/zerotier
+rm -rf zerotier-openwrt/
 rm -rf feeds/luci/applications/luci-app-zerotier
-svn export --force https://github.com/coolsnowwolf/luci/branches/master/applications/luci-app-zerotier feeds/luci/applications/luci-app-zerotier
+git clone https://github.com/zhengmz/luci-app-zerotier feeds/luci/applications/luci-app-zerotier
 
 #获取msd_lite和luci-app-msd_lite
 rm -rf feeds/packages/net/msd_lite
