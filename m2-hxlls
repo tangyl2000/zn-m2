@@ -115,11 +115,11 @@ svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/g
 
 #获取luci-app-pushbot---*******已不建议使用
 rm -rf feeds/luci/applications/luci-app-pushbot
-svn export --force https://github.com/kenzok8/openwrt-packages/branches/master/luci-app-pushbot feeds/luci/applications/luci-app-pushbot
+svn export --force https://github.com/kenzok8/small-package/branches/main/luci-app-pushbot feeds/luci/applications/luci-app-pushbot
 
-#8月有变化，luci-app-pushbot已不建议使用，换成了luci-app-wechatpush。参考https://github.com/tty228/luci-app-wechatpush
+#8月有变化，luci-app-pushbot已不建议使用，换成了luci-app-wechatpush。！！！20230830编译失败！！！参考https://github.com/tty228/luci-app-wechatpush
 rm -rf feeds/luci/applications/luci-app-wechatpush
-git clone -b openwrt-18.06 https://github.com/tty228/luci-app-wechatpush feeds/luci/applications/luci-app-wechatpush
+git clone -b openwrt-18.06 https://github.com/tty228/luci-app-wechatpush.git feeds/luci/applications/luci-app-wechatpush
 
 #获取zerotier
 rm -rf feeds/packages/net/zerotier
