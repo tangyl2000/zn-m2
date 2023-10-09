@@ -9,7 +9,7 @@ git fetch && git reset --hard origin/main
 #进入编译路径
 cd ipq6000
 
-#修改ethtool版本---20231008-6.4和6.5报错，需用6.3
+#修改ethtool版本---20231008-6.4和6.5报错，需用6.3---d9425f0a3df138734001fccc4175fe178c025f938460ac25c4ebc39960168822
 rm -rf package/network/utils/ethtool
 svn export --force https://github.com/openwrt/openwrt/branches/master/package/network/utils/ethtool package/network/utils/ethtool
 
