@@ -78,6 +78,10 @@ git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon feeds/luci/them
 sed -i 's/luci-theme-bootstrap/luci-theme-argonv3/g' feeds/luci/collections/luci/Makefile
 sed -i 's/Bootstrap/Argonv3/g' feeds/luci/collections/luci/Makefile
 
+#拉取sdf8057的luci-app-cpufreq
+rm -rf feeds/luci/applications/luci-app-cpufreq
+svn export --force https://github.com/sdf8057/luci/branches/1806/applications/luci-app-cpufreq feeds/luci/applications/luci-app-cpufreq
+
 #更新passwall所有依赖包和luci
 rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,pdnsd-alt,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,v2ray-core,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin,tuic-client,redsocks2,v2raya}
 git clone https://github.com/kenzok8/small
