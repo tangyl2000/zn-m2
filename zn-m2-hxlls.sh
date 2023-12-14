@@ -51,7 +51,7 @@ rm -rf feeds/luci/applications/luci-app-cpufreq
 svn export --force https://github.com/sdf8057/luci/branches/1806/applications/luci-app-cpufreq feeds/luci/applications/luci-app-cpufreq
 
 #更新passwall所有依赖包和luci
-rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,pdnsd-alt,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,v2ray-core,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin,tuic-client,redsocks2,v2raya}
+rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,pdnsd-alt,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,v2ray-core,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin,tuic-client,redsocks2,v2raya,shadow-tls,v2dat}
 git clone https://github.com/kenzok8/small
 mv small/* feeds/packages/net/
 rm -rf small
@@ -64,11 +64,15 @@ mv feeds/packages/net/luci-app-bypass feeds/luci/applications/luci-app-bypass
 mv feeds/packages/net/luci-app-passwall feeds/luci/applications/luci-app-passwall
 mv feeds/packages/net/luci-app-passwall2 feeds/luci/applications/luci-app-passwall2
 mv feeds/packages/net/luci-app-ssr-plus feeds/luci/applications/luci-app-ssr-plus
-mv feeds/packages/net/luci-app-vssr feeds/luci/applications/luci-app-vssr
+#mv feeds/packages/net/luci-app-vssr feeds/luci/applications/luci-app-vssr
 
 #修改curl版本
+#rm -rf feeds/packages/net/curl
+#svn export --force https://github.com/openwrt/packages/branches/master/net/curl feeds/packages/net/curl
+git clone https://github.com/sbwml/package_libs_nghttp3 package/libs/nghttp3
+git clone https://github.com/sbwml/package_libs_ngtcp2 package/libs/ngtcp2
 rm -rf feeds/packages/net/curl
-svn export --force https://github.com/openwrt/packages/branches/master/net/curl feeds/packages/net/curl
+git clone https://github.com/sbwml/feeds_packages_net_curl feeds/packages/net/curl
 
 #修改nano版本：
 rm -rf feeds/packages/utils/nano
@@ -95,9 +99,11 @@ svn export --force https://github.com/immortalwrt/packages/branches/master/admin
 
 #更新ddns-go
 rm -rf feeds/packages/net/ddns-go
-svn export --force https://github.com/sirpdboy/luci-app-ddns-go/branches/main/ddns-go feeds/packages/net/ddns-go
 rm -rf feeds/luci/applications/luci-app-ddns-go
-svn export --force https://github.com/sirpdboy/luci-app-ddns-go/branches/main/luci-app-ddns-go feeds/luci/applications/luci-app-ddns-go
+git clone https://github.com/sirpdboy/luci-app-ddns-go
+mv luci-app-ddns-go/luci-app-ddns-go feeds/luci/applications/luci-app-ddns-go
+mv luci-app-ddns-go/ddns-go feeds/packages/net/ddns-go
+rm -rf luci-app-ddns-go
 
 #修改mosdns版本、获取luci-app-mosdns
 rm -rf feeds/packages/net/mosdns
@@ -121,9 +127,10 @@ svn export --force https://github.com/coolsnowwolf/luci/branches/master/applicat
 
 #获取zerotier
 rm -rf feeds/packages/net/zerotier
-git clone https://github.com/mwarning/zerotier-openwrt
-mv zerotier-openwrt/zerotier/ feeds/packages/net/zerotier
-rm -rf zerotier-openwrt/
+#git clone https://github.com/mwarning/zerotier-openwrt --此处版本为1.12.1，旧
+svn export --force https://github.com/openwrt/packages/branches/master/net/zerotier feeds/packages/net/zerotier
+#mv zerotier-openwrt/zerotier/ feeds/packages/net/zerotier
+#rm -rf zerotier-openwrt/
 rm -rf feeds/luci/applications/luci-app-zerotier
 git clone https://github.com/zhengmz/luci-app-zerotier feeds/luci/applications/luci-app-zerotier
 
