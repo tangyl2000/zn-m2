@@ -128,11 +128,13 @@ svn export --force https://github.com/coolsnowwolf/luci/branches/master/applicat
 #获取zerotier
 rm -rf feeds/packages/net/zerotier
 #git clone https://github.com/mwarning/zerotier-openwrt --此处版本为1.12.1，旧
-svn export --force https://github.com/openwrt/packages/branches/master/net/zerotier feeds/packages/net/zerotier
+svn export --force https://github.com/coolsnowwolf/packages/branches/master/net/zerotier feeds/packages/net/zerotier
 #mv zerotier-openwrt/zerotier/ feeds/packages/net/zerotier
 #rm -rf zerotier-openwrt/
 rm -rf feeds/luci/applications/luci-app-zerotier
-git clone https://github.com/zhengmz/luci-app-zerotier feeds/luci/applications/luci-app-zerotier
+#git clone https://github.com/zhengmz/luci-app-zerotier feeds/luci/applications/luci-app-zerotier
+svn export --force https://github.com/coolsnowwolf/luci/branches/master/applications/luci-app-zerotier feeds/luci/applications/luci-app-zerotier
+#svn export --force https://github.com/immortalwrt/immortalwrt/branches/master/package/utils/ucode package/utils/ucode
 
 #获取msd_lite和luci-app-msd_lite
 rm -rf feeds/packages/net/msd_lite
