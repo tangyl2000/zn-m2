@@ -64,13 +64,6 @@ git clone https://github.com/ximiTech/msd_lite feeds/packages/net/msd_lite
 rm -rf feeds/luci/applications/luci-app-msd_lite
 git clone https://github.com/ximiTech/luci-app-msd_lite feeds/luci/applications/luci-app-msd_lite
 
-#更新luci-app-dnsfilter
-rm -rf feeds/luci/applications/luci-app-dnsfilter
-git clone https://github.com/kiddin9/luci-app-dnsfilter feeds/luci/applications/luci-app-dnsfilter
-
-#更新luci-app-filetransfer
-git clone https://github.com/rianjskis/luci-app-filetransfer feeds/luci/applications/luci-app-filetransfer
-
 #更新golang
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
