@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #拉取git clone源码
-git clone -b main --single-branch https://github.com/breeze303/ipq6000-6.1-nss.git
+git clone -b main --single-branch https://github.com/breeze303/ipq60xx-6.1.git
 
 #二次编译
 git fetch && git reset --hard origin/main
 
 #进入编译路径
-cd ipq6000-6.1-nss
+cd ipq60xx-6.1
 
 #更新packages/luci/routing/telephony
 ./scripts/feeds update -a 
@@ -42,15 +42,9 @@ mv luci-app-ddns-go/luci-app-ddns-go feeds/luci/applications/luci-app-ddns-go
 mv luci-app-ddns-go/ddns-go feeds/packages/net/ddns-go
 rm -rf luci-app-ddns-go
 
-#获取luci-app-pushbot---暂时不用了
-rm -rf feeds/luci/applications/luci-app-pushbot
-svn export --force https://github.com/coolsnowwolf/luci/branches/master/applications/luci-app-pushbot feeds/luci/applications/luci-app-pushbot
-
-#获取watchcat和luci
-rm -rf feeds/packages/net/watchcat
-svn export --force https://github.com/kenzok8/small-package/branches/main/watchcat feeds/packages/net/watchcat
-rm -rf feeds/luci/applications/luci-app-watchcat
-svn export --force https://github.com/kenzok8/small-package/branches/main/luci-app-watchcat feeds/luci/applications/luci-app-watchcat
+#获取luci-app-wechatpush(menuconfig选旧名luci-app-serverchan)
+rm -rf feeds/luci/applications/luci-app-wechatpush
+git clone https://github.com/tty228/luci-app-wechatpush feeds/luci/applications/luci-app-wechatpush
 
 #获取zerotier
 rm -rf feeds/packages/net/zerotier
@@ -73,6 +67,13 @@ git clone https://github.com/ximiTech/luci-app-msd_lite feeds/luci/applications/
 #更新luci-app-dnsfilter
 rm -rf feeds/luci/applications/luci-app-dnsfilter
 git clone https://github.com/kiddin9/luci-app-dnsfilter feeds/luci/applications/luci-app-dnsfilter
+
+#更新luci-app-filetransfer
+git clone https://github.com/rianjskis/luci-app-filetransfer feeds/luci/applications/luci-app-filetransfer
+
+#更新golang
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
 
 
 rm -rf ./tmp
