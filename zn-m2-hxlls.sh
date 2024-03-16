@@ -9,7 +9,7 @@ git fetch && git reset --hard origin/main
 #进入编译路径
 cd ipq6000
 
-#修改ethtool版本---20231008-6.4和6.5报错，需用6.3---d9425f0a3df138734001fccc4175fe178c025f938460ac25c4ebc39960168822
+#修改ethtool版本---20231008-6.4和6.5报错，6.6正常编译
 rm -rf package/network/utils/ethtool
 svn export --force https://github.com/openwrt/openwrt/branches/master/package/network/utils/ethtool package/network/utils/ethtool
 
@@ -21,7 +21,7 @@ svn export --force https://github.com/openwrt/openwrt/branches/master/package/ne
 rm -rf package/system/urandom-seed
 svn export --force https://github.com/openwrt/openwrt/branches/master/package/system/urandom-seed package/system/urandom-seed
 
-#修改ubox版本
+#修改ubox版本---要用20220813
 rm -rf package/system/ubox
 svn export --force https://github.com/openwrt/openwrt/branches/master/package/system/ubox package/system/ubox
 
@@ -30,7 +30,7 @@ rm -rf package/system/ubus
 svn export --force https://github.com/openwrt/openwrt/branches/master/package/system/ubus package/system/ubus
 #用op官网ubus版本，必须要修改rpcd的配置文件(package/system/rpcd/files/rpcd.config)中ubus.sock文件路径为：/var/run/ubus/ubus.sock，原路径：/var/run/ubus.sock
 
-#修改rpcd版本
+#修改rpcd版本，注意：需要21.02版本的rpcd！！！
 rm -rf package/system/rpcd
 svn export --force https://github.com/openwrt/openwrt/branches/openwrt-21.02/package/system/rpcd package/system/rpcd/
 
@@ -50,21 +50,22 @@ sed -i 's/Bootstrap/Argonv3/g' feeds/luci/collections/luci/Makefile
 rm -rf feeds/luci/applications/luci-app-cpufreq
 svn export --force https://github.com/sdf8057/luci/branches/1806/applications/luci-app-cpufreq feeds/luci/applications/luci-app-cpufreq
 
-#更新passwall所有依赖包和luci
-rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,pdnsd-alt,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,v2ray-core,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin,tuic-client,redsocks2,v2raya,shadow-tls,v2dat}
+#更新passwall所有依赖包和luci，注意：shadowsocksr-libev不能更新，需要用2.5.6-9版本(或immmortal-packages/net中的)！！！
+rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,pdnsd-alt,redsocks2,shadow-tls,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,tuic-client,v2dat,v2ray-core,v2ray-geodata,v2ray-plugin,v2raya,xray-core,xray-plugin,mosdns}
 git clone https://github.com/kenzok8/small
+rm -rf feeds/packages/net/luci-app-mosdns
 mv small/* feeds/packages/net/
 rm -rf small
 rm -rf feeds/packages/net/README.md
 rm -rf feeds/packages/net/LICENSE
 rm -rf feeds/packages/lang/lua-neturl
 mv feeds/packages/net/lua-neturl feeds/packages/lang/lua-neturl
-rm -rf feeds/luci/applications/{luci-app-bypass,luci-app-passwall,luci-app-passwall2,luci-app-ssr-plus,luci-app-vssr}
+rm -rf feeds/luci/applications/{luci-app-bypass,luci-app-passwall,luci-app-passwall2,luci-app-ssr-plus,luci-app-mosdns}
 mv feeds/packages/net/luci-app-bypass feeds/luci/applications/luci-app-bypass
 mv feeds/packages/net/luci-app-passwall feeds/luci/applications/luci-app-passwall
 mv feeds/packages/net/luci-app-passwall2 feeds/luci/applications/luci-app-passwall2
 mv feeds/packages/net/luci-app-ssr-plus feeds/luci/applications/luci-app-ssr-plus
-#mv feeds/packages/net/luci-app-vssr feeds/luci/applications/luci-app-vssr
+mv feeds/packages/net/luci-app-mosdns feeds/luci/applications/luci-app-mosdns
 
 #修改curl版本
 #rm -rf feeds/packages/net/curl
@@ -82,20 +83,13 @@ svn export --force https://github.com/openwrt/packages/branches/master/utils/nan
 rm -rf feeds/packages/lang/node
 svn export --force https://github.com/coolsnowwolf/packages/branches/master/lang/node feeds/packages/lang/node
 
-#修改golang版本---mosdns-v5需要新版golang
+#修改golang版本
 rm -rf feeds/packages/lang/golang
-svn export --force https://github.com/openwrt/packages/branches/master/lang/golang feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
 
 #修改htop版本
 rm -rf feeds/packages/admin/htop
 svn export --force https://github.com/immortalwrt/packages/branches/master/admin/htop feeds/packages/admin/htop
-
-#修改ddns-scripts版本---弃用，改ddns-go
-#rm -rf feeds/packages/net/{ddns-scripts,ddns-scripts_aliyun,ddns-scripts_dnspod}
-#rm -rf feeds/packages/net/ddns-scripts
-#svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts feeds/packages/net/ddns-scripts
-#svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts_aliyun feeds/packages/net/ddns-scripts_aliyun
-#svn export --force https://github.com/immortalwrt/packages/branches/master/net/ddns-scripts_dnspod feeds/packages/net/ddns-scripts_dnspod
 
 #更新ddns-go
 rm -rf feeds/packages/net/ddns-go
