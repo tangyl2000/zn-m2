@@ -66,6 +66,7 @@ mv feeds/packages/net/luci-app-passwall feeds/luci/applications/luci-app-passwal
 mv feeds/packages/net/luci-app-passwall2 feeds/luci/applications/luci-app-passwall2
 mv feeds/packages/net/luci-app-ssr-plus feeds/luci/applications/luci-app-ssr-plus
 mv feeds/packages/net/luci-app-mosdns feeds/luci/applications/luci-app-mosdns
+#千万注意：如果编译时提示../init.d/sing-box 777和字符等错误，记得要把sing-box.init文件编码转换为utf8格式！！！
 
 #修改curl版本
 #rm -rf feeds/packages/net/curl
