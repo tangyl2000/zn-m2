@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #拉取git clone源码
-git clone -b main --single-branch https://github.com/hxlls/ipq6000.git
+git clone -b main --single-branch https://github.com/tangyl2000/ipq6000.git
 
 #二次编译
 git fetch && git reset --hard origin/main
@@ -9,7 +9,7 @@ git fetch && git reset --hard origin/main
 #进入编译路径
 cd ipq6000
 
-#修改ethtool版本---20231008-6.4和6.5报错，6.6正常编译
+#修改ethtool版本
 rm -rf package/network/utils/ethtool
 svn export --force https://github.com/openwrt/openwrt/branches/master/package/network/utils/ethtool package/network/utils/ethtool
 
@@ -51,7 +51,7 @@ rm -rf feeds/luci/applications/luci-app-cpufreq
 svn export --force https://github.com/sdf8057/luci/branches/1806/applications/luci-app-cpufreq feeds/luci/applications/luci-app-cpufreq
 
 #更新passwall所有依赖包和luci，注意：shadowsocksr-libev不能更新，需要用2.5.6-9版本(或immmortal-packages/net中的)！！！
-rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,naiveproxy,pdnsd-alt,redsocks2,shadow-tls,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,tuic-client,v2dat,v2ray-core,v2ray-geodata,v2ray-plugin,v2raya,xray-core,xray-plugin,mosdns}
+rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,mosdns,naiveproxy,pdnsd-alt,redsocks2,shadow-tls,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,tuic-client,v2dat,v2ray-core,v2ray-geodata,v2ray-plugin,v2raya,xray-core,xray-plugin}
 git clone https://github.com/kenzok8/small
 rm -rf feeds/packages/net/luci-app-mosdns
 mv small/* feeds/packages/net/
@@ -66,7 +66,12 @@ mv feeds/packages/net/luci-app-passwall feeds/luci/applications/luci-app-passwal
 mv feeds/packages/net/luci-app-passwall2 feeds/luci/applications/luci-app-passwall2
 mv feeds/packages/net/luci-app-ssr-plus feeds/luci/applications/luci-app-ssr-plus
 mv feeds/packages/net/luci-app-mosdns feeds/luci/applications/luci-app-mosdns
-#千万注意：如果编译时提示../init.d/sing-box 777和字符等错误，记得要把sing-box.init文件编码转换为utf8格式！！！
+#以下为更换shadowsocksr-libev版本
+git clone https://github.com/xiaorouji/openwrt-passwall-packages
+rm -rf feeds/packages/net/shadowsocksr-libev
+mv openwrt-passwall-packages/shadowsocksr-libev feeds/packages/net/shadowsocksr-libev
+rm -rf openwrt-passwall-packages
+
 
 #修改curl版本
 #rm -rf feeds/packages/net/curl
