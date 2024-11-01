@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #拉取git clone源码
-git clone -b main --single-branch https://github.com/tangyl2000/ipq6000.git
+git clone -b main --single-branch https://github.com/hxlls/ipq6000.git
 
 #二次编译
 git fetch && git reset --hard origin/main
@@ -51,7 +51,7 @@ rm -rf feeds/luci/applications/luci-app-cpufreq
 svn export --force https://github.com/sdf8057/luci/branches/1806/applications/luci-app-cpufreq feeds/luci/applications/luci-app-cpufreq
 
 #更新passwall所有依赖包和luci，注意：shadowsocksr-libev不能更新，需要用2.5.6-9版本(或immmortal-packages/net中的)！！！
-rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,mosdns,naiveproxy,pdnsd-alt,redsocks2,shadow-tls,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,tuic-client,v2dat,v2ray-core,v2ray-geodata,v2ray-plugin,v2raya,xray-core,xray-plugin}
+rm -rf feeds/packages/net/{brook,chinadns-ng,dns2socks,dns2tcp,gn,hysteria,ipt2socks,microsocks,mosdns,naiveproxy,pdnsd-alt,redsocks2,shadow-tls,shadowsocks-rust,shadowsocksr-libev,simple-obfs,sing-box,ssocks,tcping,trojan-go,trojan-plus,trojan,tuic-client,v2dat,v2ray-core,v2ray-geodata,v2ray-plugin,v2raya,xray-core,xray-plugin,mihomo}
 git clone https://github.com/kenzok8/small
 rm -rf feeds/packages/net/luci-app-mosdns
 mv small/* feeds/packages/net/
@@ -60,12 +60,15 @@ rm -rf feeds/packages/net/README.md
 rm -rf feeds/packages/net/LICENSE
 rm -rf feeds/packages/lang/lua-neturl
 mv feeds/packages/net/lua-neturl feeds/packages/lang/lua-neturl
-rm -rf feeds/luci/applications/{luci-app-bypass,luci-app-passwall,luci-app-passwall2,luci-app-ssr-plus,luci-app-mosdns}
-mv feeds/packages/net/luci-app-bypass feeds/luci/applications/luci-app-bypass
+rm -rf feeds/luci/applications/{luci-app-passwall,luci-app-passwall2,luci-app-ssr-plus,luci-app-mosdns,luci-app-homeproxy,luci-app-mihomo,luci-app-openclash,luci-app-bypass}
 mv feeds/packages/net/luci-app-passwall feeds/luci/applications/luci-app-passwall
 mv feeds/packages/net/luci-app-passwall2 feeds/luci/applications/luci-app-passwall2
 mv feeds/packages/net/luci-app-ssr-plus feeds/luci/applications/luci-app-ssr-plus
 mv feeds/packages/net/luci-app-mosdns feeds/luci/applications/luci-app-mosdns
+mv feeds/packages/net/luci-app-homeproxy feeds/luci/applications/luci-app-homeproxy
+mv feeds/packages/net/luci-app-mihomo feeds/luci/applications/luci-app-mihomo
+mv feeds/packages/net/luci-app-openclash feeds/luci/applications/luci-app-openclash
+mv feeds/packages/net/luci-app-bypass feeds/luci/applications/luci-app-bypass
 #以下为更换shadowsocksr-libev版本
 git clone https://github.com/xiaorouji/openwrt-passwall-packages
 rm -rf feeds/packages/net/shadowsocksr-libev
@@ -91,7 +94,7 @@ svn export --force https://github.com/coolsnowwolf/packages/branches/master/lang
 
 #修改golang版本
 rm -rf feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
+git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
 
 #修改htop版本
 rm -rf feeds/packages/admin/htop
@@ -155,6 +158,14 @@ svn export --force https://github.com/immortalwrt/packages/branches/master/utils
 #更新luci-app-dnsfilter
 rm -rf feeds/luci/applications/luci-app-dnsfilter
 git clone https://github.com/kiddin9/luci-app-dnsfilter feeds/luci/applications/luci-app-dnsfilter
+
+#更新集客AC
+rm -rf feeds/luci/applications/luci-app-gecoosac
+rm -rf feeds/packages/net/gecoosac
+git clone https://github.com/lwb1978/openwrt-gecoosac
+mv openwrt-gecoosac/luci-app-gecoosac feeds/luci/applications/luci-app-gecoosac
+mv openwrt-gecoosac/gecoosac feeds/packages/net/gecoosac
+rm -rf openwrt-gecoosac
 
 
 rm -rf ./tmp
