@@ -176,6 +176,10 @@ rm -rf ./tmp
 ./scripts/feeds update -i luci
 ./scripts/feeds install -a -p luci
 
+./scripts/feeds uninstall luci-app-homeproxy
+./scripts/feeds uninstall luci-app-qosv4
+./scripts/feeds uninstall luci-app-ssr-plus
+
 #下载自己的默认配置
 rm -rf .config
 curl -sfL https://raw.githubusercontent.com/tangyl2000/zn-m2/main/zn-m2-config-hxlls -o .config
