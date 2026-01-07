@@ -10,7 +10,7 @@ cd libwrt
 git fetch && git reset --hard origin/k6.12-nss
 
 #添加rtp2httpd进feeds
-sed -i '1i src-git rtp2httpd https://github.com/stackia/rtp2httpd.git' feeds.conf.default
+sed -i '$a src-git rtp2httpd https://github.com/stackia/rtp2httpd.git' feeds.conf.default
 
 #更新feeds
 ./scripts/feeds update -a && ./scripts/feeds install -a
