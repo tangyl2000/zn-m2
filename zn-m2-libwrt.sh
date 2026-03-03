@@ -34,10 +34,11 @@ rm -rf luci-app-ddns-go
 #更新集客AC
 rm -rf feeds/luci/applications/luci-app-gecoosac
 rm -rf feeds/packages/net/gecoosac
-git clone https://github.com/lwb1978/openwrt-gecoosac
-mv openwrt-gecoosac/luci-app-gecoosac feeds/luci/applications/luci-app-gecoosac
-mv openwrt-gecoosac/gecoosac feeds/packages/net/gecoosac
-rm -rf openwrt-gecoosac
+#git clone https://github.com/lwb1978/openwrt-gecoosac
+git clone https://github.com/laipeng668/luci-app-gecoosac
+mv luci-app-gecoosac/luci-app-gecoosac feeds/luci/applications/luci-app-gecoosac
+mv luci-app-gecoosac/gecoosac feeds/packages/net/gecoosac
+rm -rf luci-app-gecoosac
 
 
 rm -rf ./tmp
